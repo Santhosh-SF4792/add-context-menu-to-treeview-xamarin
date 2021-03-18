@@ -1,0 +1,48 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:local="clr-namespace:TreeViewXamarin"
+             x:Class="TreeViewXamarin.MainPage"
+             Padding="{OnPlatform iOS='0,40,0,0'}">
+
+    <ContentPage.BindingContext>
+        <local:FileManagerViewModel x:Name="viewModel"/>
+    </ContentPage.BindingContext>
+
+    <ContentPage.Behaviors>
+        <local:ContextManuBehavior/>
+    </ContentPage.Behaviors>
+
+    <local:KeyDetector x:Name="keyDetectorGrid">
+        <StackLayout>
+            <local:SfTreeViewExt x:Name="treeView" ChildPropertyName="SubFiles" NodeSizeMode="Dynamic" NotificationSubscriptionMode="CollectionChange" ItemsSource="{Binding ImageNodeInfo}" AutoExpandMode="AllNodesExpanded">
+                <local:SfTreeViewExt.ItemTemplate>
+                    <DataTemplate>
+                        <local:CustomGrid x:Name="grid" TreeView="{x:Reference treeView}">
+                            <local:CustomGrid.RowDefinitions>
+                                <RowDefinition Height="Auto" />
+                                <RowDefinition Height="1" />
+                            </local:CustomGrid.RowDefinitions>
+                            <Grid RowSpacing="0" Grid.Row="0">
+                                <Grid.ColumnDefinitions>
+                                    <ColumnDefinition Width="40" />
+                                    <ColumnDefinition Width="*" />
+                                </Grid.ColumnDefinitions>
+                                <Grid Padding="5,5,5,5">
+                                    <Image Source="{Binding ImageIcon}" VerticalOptions="Center" HorizontalOptions="Center" HeightRequest="35" WidthRequest="35"/>
+                                </Grid>
+                                <Grid Grid.Column="1" RowSpacing="1" Padding="1,0,0,0" VerticalOptions="Center">
+                                    <Grid.RowDefinitions>
+                                        <RowDefinition Height="Auto"/>
+                                    </Grid.RowDefinitions>
+                                    <Label LineBreakMode="NoWrap" TextColor="Black" Text="{Binding ItemName}" VerticalTextAlignment="Center"/>
+                                </Grid>
+                            </Grid>
+                            <StackLayout Grid.Row="1" HeightRequest="1"/>
+                        </local:CustomGrid>
+                    </DataTemplate>
+                </local:SfTreeViewExt.ItemTemplate>
+            </local:SfTreeViewExt>
+        </StackLayout>
+    </local:KeyDetector>
+</ContentPage>
